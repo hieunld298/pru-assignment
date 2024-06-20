@@ -14,6 +14,7 @@ public class MoveController : MonoBehaviour
     private Weapon weapon;
     public SpriteRenderer characterSR;
     public GameObject[] listEnemy;
+    
     void Start()
     {
          rd = gameObject.GetComponent<Rigidbody2D>();   
@@ -59,10 +60,7 @@ public class MoveController : MonoBehaviour
         }
             
         
-        if (Input.GetKey(KeyCode.Space))
-        {
-            Weapon.instance.Fire(isFacingRight);
-        }
+        
 
     }
 

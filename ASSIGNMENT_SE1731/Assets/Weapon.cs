@@ -20,36 +20,56 @@ public class Weapon : MonoBehaviour
     {
 
     }
-    private void Awake()
-    {
-        instance = this;
-    }
+    //private void Awake()
+    //{
+    //    instance = this;
+    //}
     // Update is called once per frame
     void Update()
     {
         RotateGun();
-        
+        if (Input.GetMouseButton(0))
+        {
+            //Weapon.instance.Fire(isFacingRight);
+            Debug.Log("Firing");
+            Fire();
+        }
+
     }
     void RotateGun()
     {
-         GameObject objectEnemy= FindNearestObject(player,listEnemy);
-        if (objectEnemy != null)
-        {
-            Vector2 lookDir = objectEnemy.transform.position - player.transform.position;
-            float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg;
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //GameObject objectEnemy= FindNearestObject(player,listEnemy);
+        //if (objectEnemy != null)
+        //{
+        Vector2 lookDir = mousePos - transform.position;
+        float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg;
 
-            Quaternion rotation = Quaternion.Euler(0, 0, angle);
-            transform.rotation = rotation;
-            if (transform.eulerAngles.z > 90 && transform.eulerAngles.z < 270)
-            {
-                transform.localScale = new Vector3((float)0.5, (float)-0.5, 0);
-            }
-            else
-            {
-                transform.localScale = new Vector3((float)0.5, (float)0.5, 0);
-            }
+        Quaternion rotation = Quaternion.Euler(0, 0, angle);
+        transform.rotation = rotation;
+        if (transform.eulerAngles.z > 90 && transform.eulerAngles.z < 270)
+        {
+            transform.localScale = new Vector3((float)0.5, (float)-0.5, 0);
         }
+        else
+        {
+            transform.localScale = new Vector3((float)0.5, (float)0.5, 0);
+        }
+        //}
         
+
+        //Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //mousePosition.z = 0; 
+
+        
+        //Vector2 direction = (mousePosition - transform.position).normalized;
+
+        
+        //float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+        
+        //transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+
     }
 
    
@@ -101,7 +121,7 @@ public class Weapon : MonoBehaviour
        
     }
 
-    public void Fire(bool isFacingRight)
+    public void Fire()
     {
         
         timeBtwFire -= Time.deltaTime;
@@ -110,17 +130,17 @@ public class Weapon : MonoBehaviour
         {
             timeBtwFire = TimeBtwFire;
            
-            if ((isFacingRight|| isTargettingEnemy(player,listEnemy)) || !isFacingRight && isTargettingEnemy(player, listEnemy)) {
+            //if ((isFacingRight|| isTargettingEnemy(player,listEnemy)) || !isFacingRight && isTargettingEnemy(player, listEnemy)) {
                 GameObject bulletTmp = Instantiate(bullet, firePos.position, Quaternion.identity);
                 Rigidbody2D rb = bulletTmp.GetComponent<Rigidbody2D>();
                 rb.AddForce(transform.right * bulletForce, ForceMode2D.Impulse) ;
-            }
-            else if(!isFacingRight && !isTargettingEnemy(player, listEnemy))
-            {
-                GameObject bulletTmp = Instantiate(bullet, firePos.position, Quaternion.identity);
-                Rigidbody2D rb = bulletTmp.GetComponent<Rigidbody2D>();
-                rb.AddForce(-transform.right * bulletForce, ForceMode2D.Impulse);
-            }
+            //}
+            //else if(!isFacingRight && !isTargettingEnemy(player, listEnemy))
+            //{
+            //    GameObject bulletTmp = Instantiate(bullet, firePos.position, Quaternion.identity);
+            //    Rigidbody2D rb = bulletTmp.GetComponent<Rigidbody2D>();
+            //    rb.AddForce(-transform.right * bulletForce, ForceMode2D.Impulse);
+            //}
         }
         
     }

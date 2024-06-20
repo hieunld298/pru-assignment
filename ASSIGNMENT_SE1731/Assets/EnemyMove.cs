@@ -1,4 +1,4 @@
-using Pathfinding;
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,16 +8,12 @@ public class EnemyMove : MonoBehaviour
 {
     // Start is called before the first frame update
     public GameObject player;
-    private AIPath ai;
+   
 
     private EnemyHealth enemyHealth;
     void Start()
     {
-        ai=gameObject.GetComponent<AIPath>();
-        if (ai != null)
-        {
-            ai.enabled = false;
-        }
+       
         enemyHealth=gameObject.GetComponent<EnemyHealth>();
     }
 
@@ -27,11 +23,11 @@ public class EnemyMove : MonoBehaviour
         float distance = Vector3.Distance(player.transform.position, transform.position);
         if (distance < 15)
         {
-            ai.enabled = true;
+            Debug.Log("Moveeeeee");
         }
         else
         {
-            ai.enabled = false;
+            Debug.Log("NOT Moveeeeee");
         }
     }
     private void OnCollisionEnter2D(Collision2D collision)
